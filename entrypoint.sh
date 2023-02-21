@@ -60,7 +60,7 @@ push_chart() {
     local charts=$1
     for chart in $charts; do
         echo "Pushing chart '$chart'..."
-        helm push ${chart_destination_dir}/$chart $chart_repo
+        helm push ${chart_destination_dir}/$chart $CHART_REPOSITORY
     done
 }
 
@@ -91,7 +91,6 @@ package_chart "$chart_diffs"
 # create a tag for each chart
 create_git_tag_from_chart "$(ls $chart_destination_dir)"
 # push the charts to the chart repository
-chart_repo="oci://registry.developers.tagesspiegel.de/leon"
 push_chart "$(ls $chart_destination_dir)"
 
 # cleanup
