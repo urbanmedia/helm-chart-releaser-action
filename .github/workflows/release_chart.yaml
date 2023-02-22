@@ -7,6 +7,8 @@ on:
       - feat/e2e-tests
     paths:
       - '_tests/charts/**'
+      - 'action.yml'
+      - '.github/workflows/release_chart.yaml'
 
 env:
   chart_repo: ${{ vars.OCI_REGISTRY_REPOSITORY_URL }}
@@ -24,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Release Chart
-        uses: ./
+        uses: ./action.yml
         with:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           github_actor: ${{ github.actor }}
