@@ -62,14 +62,26 @@ runs:
           --username ${{ inputs.chart_repository_username }} \
           --password-stdin
 
+    - name: Debug
+      shell: bash
+      continue-on-error: true
+      run: |
+        echo "===== Current dir ====="
+        ls -l
+        echo "===== current dir -> charts dir ====="
+        ls -l ${{ inputs.charts_dir }}
+        echo "===== Action path ====="
+        ls -l ${{ github.action_path }}
+        echo "===== Action path charts dir ====="
+        ls -l ${{ github.action_path }}/${{ inputs.charts_dir }}
+
     - name: Build and push Helm charts
-      working-directory: ${{ github.action_path }}
       env:
         GITHUB_TOKEN: ${{ inputs.gh_token }}
         CHARTS_DIR: ${{ inputs.charts_dir }}
         CHART_REPOSITORY: ${{ inputs.chart_repository_url }}
       shell: bash
-      run: ${{ github.action_path }}/entrypoint.sh
+      run: ./entrypoint.sh
 
     - name: Logout from Helm registry
       if: always()
