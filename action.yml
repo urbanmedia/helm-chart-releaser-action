@@ -41,6 +41,10 @@ branding:
 runs:
   using: "composite"
   steps:
+    - name: Add GitHub token to env
+      shell: bash
+      run: echo "GITHUB_TOKEN=${{ inputs.gh_token }}" >> $GITHUB_ENV
+
     - name: Configure Git
       shell: bash
       run: |
