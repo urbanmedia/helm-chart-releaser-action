@@ -9,8 +9,8 @@ on:
       - '_tests/charts/**'
 
 env:
-  chart_repo: ${{ variables.OCI_REGISTRY_REPOSITORY_URL }}
-  chart_auth_username: ${{ variables.OCI_REGISTRY_REPOSITORY_USERNAME }}
+  chart_repo: ${{ vars.OCI_REGISTRY_REPOSITORY_URL }}
+  chart_auth_username: ${{ vars.OCI_REGISTRY_REPOSITORY_USERNAME }}
   chart_auth_password: ${{ secrets.OCI_REGISTRY_REPOSITORY_PASSWORD }}
 
 permissions:
