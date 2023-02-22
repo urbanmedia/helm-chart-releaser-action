@@ -66,8 +66,10 @@ runs:
       working-directory: ${{ github.action_path }}
       env:
         GITHUB_TOKEN: ${{ inputs.gh_token }}
+        CHARTS_DIR: ${{ inputs.charts_dir }}
+        CHART_REPOSITORY: ${{ inputs.chart_repository_url }}
       shell: bash
-      run: "${{ github.action_path }}/entrypoint.sh \"user\" \"custom_field\" \"${{ inputs.user }}\" \"${{ inputs.project_id }}\" \"${{ inputs.resource_node_id }}\" \"${{ inputs.custom_field_values }}\""
+      run: "${{ github.action_path }}/entrypoint.sh
 
     - name: Logout from Helm registry
       if: always()
