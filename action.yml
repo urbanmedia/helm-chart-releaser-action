@@ -57,9 +57,10 @@ runs:
     - name: Login to Helm registry
       shell: bash
       run: |
+        echo "${{ inputs.chart_repository_password }}" | \
         helm registry login ${{ inputs.chart_repository_url }} \
           --username ${{ inputs.chart_repository_username }} \
-          --password ${{ inputs.chart_repository_password }}
+          --password-stdin
 
     - name: Build and push Helm charts
       if: inputs.user != '' && inputs.operation_mode == 'custom_field'
