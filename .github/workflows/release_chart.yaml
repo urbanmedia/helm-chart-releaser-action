@@ -36,7 +36,7 @@ jobs:
           ls -l _tests/charts/
 
       - name: Release Chart
-        uses: urbanmedia/helm-chart-releaser-action@main
+        uses: urbanmedia/helm-chart-releaser-action@fix/action-release-flow
         env:
           DEBUG: true
         with:
