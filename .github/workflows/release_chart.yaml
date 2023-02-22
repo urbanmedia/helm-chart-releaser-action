@@ -1,0 +1,41 @@
+name: Test Release Chart
+
+on:
+  push:
+    branches:
+      - master
+      - feat/e2e-tests
+    paths:
+      - '_tests/charts/**'
+      - 'action.yml'
+      - '.github/workflows/release_chart.yaml'
+
+env:
+  chart_repo: ${{ vars.OCI_REGISTRY_REPOSITORY_URL }}
+  chart_auth_username: ${{ vars.OCI_REGISTRY_REPOSITORY_USERNAME }}
+  chart_auth_password: ${{ secrets.OCI_REGISTRY_REPOSITORY_PASSWORD }}
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  helm_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Release Chart
+        uses: urbanmedia/helm-chart-releaser-action@main
+        env:
+          DEBUG: true
+        with:
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          github_actor: ${{ github.actor }}
+          charts_dir: _tests/charts
+          chart_repository_url: ${{ env.chart_repo }}
+          chart_repository_username: ${{ env.chart_auth_username }}
+          chart_repository_password: ${{ env.chart_auth_password }}
