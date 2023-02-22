@@ -69,7 +69,7 @@ runs:
         CHARTS_DIR: ${{ inputs.charts_dir }}
         CHART_REPOSITORY: ${{ inputs.chart_repository_url }}
       shell: bash
-      run: "${{ github.action_path }}/entrypoint.sh
+      run: ${{ github.action_path }}/entrypoint.sh
 
     - name: Logout from Helm registry
       if: always()
