@@ -38,3 +38,8 @@ jobs:
           chart_repository_url: ${{ env.chart_repo }}
           chart_repository_username: ${{ env.chart_auth_username }}
           chart_repository_password: ${{ env.chart_auth_password }}
+
+      - name: Remove git tag from remote
+        continue-on-error: true
+        run: |
+          git push --delete origin test-chart-0.1.0
