@@ -87,6 +87,7 @@ package_chart "$chart_diffs"
 
 ls -l $chart_destination_dir
 
+echo "checking if there are charts to push"
 # check if chart_destination_dir exists
 if [[ ! -d ${chart_destination_dir} ]]; then
     echo "No charts to push"
