@@ -84,6 +84,13 @@ lastTag=$(lookup_latest_tag)
 chart_diffs=$(lookup_chart_changes "$lastTag" "${CHARTS_DIR}")
 # package the changed charts
 package_chart "$chart_diffs"
+
+# check if chart_destination_dir exists
+if [[ ! -d "$chart_destination_dir" ]]; then
+    echo "No charts to push"
+    exit 0
+fi
+
 # create a tag for each chart
 create_git_tag_from_chart "$(ls $chart_destination_dir)"
 # push the charts to the chart repository
