@@ -74,4 +74,4 @@ runs:
       if: always()
       shell: bash
       run: |
-        helm registry logout ${{ inputs.chart_repository_url }}
+        helm registry logout $(echo ${{ inputs.chart_repository_url }} | cut -d'/' -f3-4)
