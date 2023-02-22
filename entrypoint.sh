@@ -74,10 +74,6 @@ if [[ -z "$CHARTS_DIR" ]]; then
     exit 1
 fi
 
-
-# change the directory to the charts directory
-cd ${CHARTS_DIR}
-
 # the directory where the packaged charts will be stored
 chart_destination_dir="builds"
 
