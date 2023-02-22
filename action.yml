@@ -67,6 +67,6 @@ runs:
 
     - name: Logout from Helm registry
       if: always()
-      uses: bash
+      shell: bash
       run: |
         helm registry logout ${{ inputs.chart_repository_url }}
