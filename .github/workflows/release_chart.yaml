@@ -28,13 +28,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Debug
-        continue-on-error: true
-        run: |
-          ls -l
-          ls -l _tests/
-          ls -l _tests/charts/
-
       - name: Release Chart
         uses: urbanmedia/helm-chart-releaser-action@fix/action-release-flow
         env:
