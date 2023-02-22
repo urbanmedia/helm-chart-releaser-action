@@ -63,7 +63,6 @@ runs:
           --password-stdin
 
     - name: Build and push Helm charts
-      if: inputs.user != '' && inputs.operation_mode == 'custom_field'
       working-directory: ${{ github.action_path }}
       env:
         GITHUB_TOKEN: ${{ inputs.gh_token }}
