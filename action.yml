@@ -58,7 +58,7 @@ runs:
       shell: bash
       run: |
         echo "${{ inputs.chart_repository_password }}" | \
-        helm registry login ${{ inputs.chart_repository_url }} \
+        helm registry login $(echo ${{ inputs.chart_repository_url }} | cut -d'/' -f1-3) \
           --username ${{ inputs.chart_repository_username }} \
           --password-stdin
 
