@@ -75,13 +75,12 @@ runs:
         ls -l ${{ github.action_path }}/${{ inputs.charts_dir }}
 
     - name: Build and push Helm charts
-      working-directory: ${{ github.action_path }}
       env:
         GITHUB_TOKEN: ${{ inputs.gh_token }}
         CHARTS_DIR: ${{ inputs.charts_dir }}
         CHART_REPOSITORY: ${{ inputs.chart_repository_url }}
       shell: bash
-      run: ${{ github.action_path }}/entrypoint.sh
+      run: ./entrypoint.sh
 
     - name: Logout from Helm registry
       if: always()
