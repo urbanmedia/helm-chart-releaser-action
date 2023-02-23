@@ -11,8 +11,6 @@ on:
   pull_request:
     branches:
       - "**"
-      - "!main"
-    types: [opened, edited]
 
 env:
   chart_repo: ${{ vars.OCI_REGISTRY_REPOSITORY_URL }}
