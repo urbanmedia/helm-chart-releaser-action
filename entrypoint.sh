@@ -74,9 +74,17 @@ if [[ -z "$CHARTS_DIR" ]]; then
     exit 1
 fi
 
+# set the git user
+git config user.name "${GH_ACTOR}"
+git config user.email "${GH_ACTOR}@users.noreply.github.com"
+
+echo "${CHART_REPOSITORY_PASSWORD}" | \
+helm registry login $(echo ${CHART_REPOSITORY} | cut -d'/' -f3-4) \
+    --username ${CHART_REPOSITORY_USERNAME} \
+    --password-stdin
+
 # the directory where the packaged charts will be stored
 chart_destination_dir="builds"
-
 # the last tag that was created
 # we use this to determine which charts have changed since the last release
 lastTag=$(lookup_latest_tag)
@@ -101,3 +109,5 @@ push_chart "$(ls $chart_destination_dir)"
 
 # cleanup
 rm -rf $chart_destination_dir
+
+helm registry logout $(echo ${CHART_REPOSITORY} | cut -d'/' -f3-4)
