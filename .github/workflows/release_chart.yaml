@@ -8,9 +8,9 @@ on:
       - '_tests/charts/**'
       - 'action.yml'
       - '.github/workflows/release_chart.yaml'
-  pull_request:
-    branches:
-      - "**"
+  issue_comment:
+    types:
+      - created
 
 env:
   chart_repo: ${{ vars.OCI_REGISTRY_REPOSITORY_URL }}
@@ -25,7 +25,7 @@ jobs:
   helm_release:
     runs-on: ubuntu-latest
     # either execute on push to main or on comment to PR with '/test'
-    if: (github.event_name == 'push' && github.ref_name == 'main') || (github.event_name == 'pull_request' && contains(github.event.comment.body, '/test'))
+    if: (github.event_name == 'push' && github.ref_name == 'main') || (github.event.issue.pull_request && contains(github.event.comment.body, '/test'))
     steps:
       - name: Checkout
         uses: actions/checkout@v3
