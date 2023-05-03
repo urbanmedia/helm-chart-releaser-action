@@ -13,9 +13,9 @@ on:
       - created
 
 env:
-  chart_repo: ${{ vars.OCI_REGISTRY_REPOSITORY_URL }}
-  chart_auth_username: ${{ vars.OCI_REGISTRY_REPOSITORY_USERNAME }}
-  chart_auth_password: ${{ secrets.OCI_REGISTRY_REPOSITORY_PASSWORD }}
+  chart_repo: oci://ghcr.io/${{ github.repository_owner }}
+  chart_auth_username: ${{ github.actor }}
+  chart_auth_password: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
   contents: write
