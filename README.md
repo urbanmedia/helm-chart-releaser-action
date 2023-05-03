@@ -56,3 +56,8 @@ jobs:
           chart_repository_username: ${{ secrets.GHCR_USERNAME }}
           chart_repository_password: ${{ secrets.GHCR_PASSWORD }}
 ```
+
+## Known limitations
+
+- Updating existing Helm charts with the same version is not supported. Any attempt to do so will result in an error.</br>
+  `Error: unexpected status from HEAD request to https://<registry-url>/v2/<repository>/<chart-name>/manifests/<version>: 412 Precondition Failed`
