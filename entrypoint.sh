@@ -76,6 +76,7 @@ fi
 
 # the directory where the packaged charts will be stored
 chart_destination_dir="builds"
+mkdir -p ${chart_destination_dir}
 
 # the last tag that was created
 # we use this to determine which charts have changed since the last release
