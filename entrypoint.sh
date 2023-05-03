@@ -85,6 +85,8 @@ helm registry login $(echo ${CHART_REPOSITORY} | cut -d'/' -f3-4) \
 
 # the directory where the packaged charts will be stored
 chart_destination_dir="builds"
+mkdir -p ${chart_destination_dir}
+
 # the last tag that was created
 # we use this to determine which charts have changed since the last release
 lastTag=$(lookup_latest_tag)
