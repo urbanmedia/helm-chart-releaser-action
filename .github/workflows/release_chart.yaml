@@ -13,9 +13,11 @@ on:
       - created
 
 env:
-  chart_repo: oci://ghcr.io/${{ github.repository_owner }}
+  chart_registry_url: oci://ghcr.io
+  chart_registry_repo_name: ${{ github.repository_owner }}
   chart_auth_username: ${{ github.actor }}
   chart_auth_password: ${{ secrets.GITHUB_TOKEN }}
+  GO_VERSION: 1.20
 
 permissions:
   contents: write
@@ -29,6 +31,16 @@ jobs:
     # either execute on push to main or on comment to PR with '/test'
     if: (github.event_name == 'push' && github.ref_name == 'main') || (github.event.issue.pull_request && contains(github.event.comment.body, '/test'))
     steps:
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Setup RegCtl
+        run: |
+          go install github.com/regclient/regclient/cmd/regctl@latest
+          echo "${{ env.chart_auth_password }}" | regctl registry login --user ${{ env.chart_auth_username }} --password-stdin ${{ env.chart_registry_url }}
+
       - name: Checkout
         if: github.event.issue.pull_request && contains(github.event.comment.body, '/test')
         uses: actions/checkout@v3
@@ -51,14 +63,27 @@ jobs:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           github_actor: ${{ github.actor }}
           charts_dir: _tests/charts
-          chart_repository_url: ${{ env.chart_repo }}
+          chart_repository_url: oci://${{ env.chart_registry_url }}/${{ env.chart_registry_repo_name }}
           chart_repository_username: ${{ env.chart_auth_username }}
           chart_repository_password: ${{ env.chart_auth_password }}
 
       - name: Remove git tag from remote
+        if: always()
         continue-on-error: true
         run: |
           git push --delete origin test-chart-0.1.0
+
+      - name: Remove Helm chart from registry
+        if: always()
+        continue-on-error: true
+        run:
+          regctl tag rm ${{ env.chart_registry_url }}/${{ env.chart_registry_repo_name }}/test-chart:0.1.0
+
+      - name: Logout regctl
+        if: always()
+        continue-on-error: true
+        run: |
+          regctl registry logout ${{ env.chart_registry_url }}
 
       - name: Comment PR
         if: failure() && github.event.issue.pull_request && contains(github.event.comment.body, '/test')
