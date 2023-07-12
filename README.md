@@ -53,7 +53,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Run chart-releaser
-        uses: urbanmedia/helm-chart-releaser-action@latest
+        uses: urbanmedia/helm-chart-releaser-action@v1.0.0
         with:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           chart_repository_url: oci://ghcr.io/urbanmedia/helm-charts
