@@ -38,7 +38,8 @@ jobs:
 
       - name: Install RegCTL
         run: |
-          go install github.com/regclient/regclient/cmd/regctl@latest
+          curl -L https://github.com/regclient/regclient/releases/latest/download/regctl-linux-amd64 -o /usr/local/bin/regctl
+          chmod 755 /usr/local/bin/regctl
 
       - name: Setup RegCTL
           echo "${{ env.chart_auth_password }}" | regctl registry login --user ${{ env.chart_auth_username }} --password-stdin ${{ env.chart_registry_url }}
