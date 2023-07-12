@@ -72,8 +72,6 @@ runs:
         ls -l ${{ inputs.charts_dir }}
         echo "===== Action path ====="
         ls -l ${{ github.action_path }}
-        echo "===== Action path charts dir ====="
-        ls -l ${{ github.action_path }}/${{ inputs.charts_dir }}
 
     - name: Build and push Helm charts
       env:
@@ -81,7 +79,7 @@ runs:
         CHARTS_DIR: ${{ inputs.charts_dir }}
         CHART_REPOSITORY: ${{ inputs.chart_repository_url }}
       shell: bash
-      run: ./entrypoint.sh
+      run: ${{ github.action_path }}/entrypoint.sh
 
     - name: Logout from Helm registry
       if: always()
