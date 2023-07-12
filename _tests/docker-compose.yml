@@ -1,0 +1,12 @@
+version: '3'
+services:
+  registry:
+    image: registry:2
+    environment:
+      REGISTRY_AUTH: 'htpasswd'
+      REGISTRY_AUTH_HTPASSWD_REALM: 'basic'
+      REGISTRY_AUTH_HTPASSWD_PATH: '/htpasswd'
+    ports:
+      - 5000:5000
+    volumes:
+      - ./registry.htpasswd:/htpasswd:ro
