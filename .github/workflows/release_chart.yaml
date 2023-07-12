@@ -13,10 +13,10 @@ on:
       - created
 
 env:
-  chart_registry_url: ${{ vars.OCI_REGISTRY_URL }}
-  chart_registry_repo_name: ${{ vars.OCI_REGISTRY_REPOSITORY_NAME }}
-  chart_auth_username: ${{ vars.OCI_REGISTRY_REPOSITORY_USERNAME }}
-  chart_auth_password: ${{ secrets.OCI_REGISTRY_REPOSITORY_PASSWORD }}
+  chart_registry_url: ghcr.io
+  chart_registry_repo_name: ${{ github.repository_owner }}/helm-charts
+  chart_auth_username: ${{ github.actor }}
+  chart_auth_password: ${{ secrets.GITHUB_TOKEN }}
   GO_VERSION: 1.20
 
 permissions:
