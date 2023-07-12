@@ -61,3 +61,42 @@ jobs:
 
 - Updating existing Helm charts with the same version is not supported. Any attempt to do so will result in an error.</br>
   `Error: unexpected status from HEAD request to https://<registry-url>/v2/<repository>/<chart-name>/manifests/<version>: 412 Precondition Failed`
+
+## Running tests locally
+
+In order to run the tests locally, you need to have [docker](https://www.docker.com/) installed. Docker is used to run a local OCI compatible registry. The tests will push a Helm chart to the local registry. You can then verify with `docker pull` that the chart was pushed successfully.
+
+**Start the local registry:**
+
+```bash
+cd _tests
+docker-compose up -d
+```
+
+**Run the tests:**
+
+```bash
+DEBUG="true" CHARTS_DIR="_tests/charts" CHART_REPOSITORY="oci://localhost:5000/test/helm-charts" ./entrypoint.sh
+```
+
+**Verify that the chart was pushed:**
+
+```bash
+docker pull localhost:5000/test/helm-charts:chart-0.1.0
+```
+
+Expected output:
+
+```bash
+0.1.0: Pulling from test/helm-charts/test-chart
+unsupported media type application/vnd.cncf.helm.config.v1+json
+```
+
+If you see the above output, the chart was pushed successfully.
+
+**Stop the local registry:**
+
+```bash
+cd _tests
+docker-compose down
+```
