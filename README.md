@@ -1,6 +1,10 @@
 # helm-chart-releaser-action
 
-This repository provides a GitHub action for publishing Helm charts to a chart repository using the ***push*** command provided by Helm.
+This repository provides a GitHub action for publishing Helm charts to an OCI-compatible registry. Before publishing the charts, the action also creates a Git tag for the current commit. The tag is named after the name and version of the chart. If the chart template contains changes, but the Chart.yaml version key is not updated, the action skips publishing and takes no action. On the other hand, if the Chart.yaml version key is updated, the action creates a Git tag and pushes it to the repository.
+
+Example:
+
+Assuming the chart's name is 'test-chart' and the version is '0.1.0', the action will create a git tag named 'test-chart-0.1.0'.
 
 ## Input values
 
